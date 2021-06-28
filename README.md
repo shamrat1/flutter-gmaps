@@ -1,16 +1,11 @@
-# gmaps
+# Mappy - Working With Google Maps in Flutter
 
-A new Flutter project.
+### Description
+ A Project in Flutter with google maps to add markers on map, changing camera positions on map view, and get directions betweeen two points From Directions API.
 
-## Getting Started
+ ### Screenshots
 
-This project is a starting point for a Flutter application.
+![alt text](./docs/screenshot/s1.jpg "With Origin and Destination Selected")
+![alt text](./docs/screenshot/s2.jpg "With Origin and Destination zoomed and tilted camera angle")
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
