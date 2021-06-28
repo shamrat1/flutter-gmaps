@@ -5,7 +5,6 @@
 
  ### Screenshots
 
-![alt text](./docs/screenshot/s1.jpg "With Origin and Destination Selected")
-![alt text](./docs/screenshot/s2.jpg "With Origin and Destination zoomed and tilted camera angle")
-
+<img src="./docs/screenshots/s1.jpg" width="200px" alt="With Origin and Destination Selected">
+<img src="./docs/screenshots/s2.jpg" width="200px" alt="With Origin and Destination zoomed and tilted camera angle">
 
