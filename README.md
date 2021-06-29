@@ -6,5 +6,6 @@
  ### Screenshots
 
 <img src="./docs/screenshots/s1.jpg" width="200px" alt="With Origin and Destination Selected">
+<img src="./docs/screenshots/s3.jpg" width="200px" alt="Custom Polygons added onTap event on map">
 <img src="./docs/screenshots/s2.jpg" width="200px" alt="With Origin and Destination zoomed and tilted camera angle">
 
