@@ -39,16 +39,16 @@ class _MapViewState extends State<MapView> {
   GoogleMapController _mapController;
   Marker _origin;
   Marker _destination;
+  Marker _tap1;
+  Marker _tap2;
+  Marker _tap3;
+  Marker _tap4;
   Directions _info;
 
-  List<LatLng> polygonItems = [
-    LatLng(22.3569, 91.7832),
-    LatLng(22.3670, 91.7932),
-    LatLng(22.3769, 91.8832),
-    LatLng(22.3544, 91.3211)
-  ];
+  List<LatLng> polygonItems = [];
 
   Set<Polygon> _polygons = HashSet<Polygon>();
+  var _polygonTapCounter = 0;
 
   @override
   void dispose() {
@@ -64,6 +64,29 @@ class _MapViewState extends State<MapView> {
         strokeColor: Colors.blue,
         strokeWidth: 2,
         fillColor: Colors.grey.withOpacity(0.2)));
+  }
+
+  void _getPolygonPoint(LatLng point) async {
+    if (_polygonTapCounter <= 3) {
+      polygonItems.add(point);
+      setState(() {
+        _addPolygonMarker(point);
+      });
+      if (_polygonTapCounter == 3) {
+        setState(() {
+          _setPolygons();
+        });
+      }
+
+      _polygonTapCounter++;
+    } else {
+      setState(() {
+        _polygonTapCounter = 0;
+        polygonItems.clear();
+        _clearPolygonMarkers();
+        _polygons.clear();
+      });
+    }
   }
 
   void _addMarker(LatLng pos) async {
@@ -98,7 +121,6 @@ class _MapViewState extends State<MapView> {
 
   @override
   Widget build(BuildContext context) {
-    _setPolygons();
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -140,7 +162,11 @@ class _MapViewState extends State<MapView> {
             onMapCreated: (controller) => _mapController = controller,
             markers: {
               if (_origin != null) _origin,
-              if (_destination != null) _destination
+              if (_destination != null) _destination,
+              if (_tap1 != null) _tap1,
+              if (_tap2 != null) _tap2,
+              if (_tap3 != null) _tap3,
+              if (_tap4 != null) _tap4,
             },
             polylines: {
               if (_info != null)
@@ -154,6 +180,7 @@ class _MapViewState extends State<MapView> {
             },
             polygons: _polygons,
             onLongPress: _addMarker,
+            onTap: _getPolygonPoint,
           ),
           if (_info != null)
             Positioned(
@@ -194,5 +221,49 @@ class _MapViewState extends State<MapView> {
             : CameraUpdate.newCameraPosition(_initialCameraPosition)),
       ),
     );
+  }
+
+  void _addPolygonMarker(LatLng point) {
+    switch (_polygonTapCounter) {
+      case 0:
+        _tap1 = Marker(
+            markerId: MarkerId("tap1"),
+            infoWindow: InfoWindow(title: "First Polygon Marker"),
+            icon: BitmapDescriptor.defaultMarkerWithHue(
+                BitmapDescriptor.hueOrange),
+            position: point);
+        break;
+      case 1:
+        _tap2 = Marker(
+            markerId: MarkerId("tap2"),
+            infoWindow: InfoWindow(title: "Second Polygon Marker"),
+            icon: BitmapDescriptor.defaultMarkerWithHue(
+                BitmapDescriptor.hueOrange),
+            position: point);
+        break;
+      case 2:
+        _tap3 = Marker(
+            markerId: MarkerId("tap3"),
+            infoWindow: InfoWindow(title: "Third Polygon Marker"),
+            icon: BitmapDescriptor.defaultMarkerWithHue(
+                BitmapDescriptor.hueOrange),
+            position: point);
+        break;
+      case 3:
+        _tap4 = Marker(
+            markerId: MarkerId("tap4"),
+            infoWindow: InfoWindow(title: "Fouth Polygon Marker"),
+            icon: BitmapDescriptor.defaultMarkerWithHue(
+                BitmapDescriptor.hueOrange),
+            position: point);
+        break;
+    }
+  }
+
+  void _clearPolygonMarkers() {
+    _tap1 = null;
+    _tap2 = null;
+    _tap3 = null;
+    _tap4 = null;
   }
 }
