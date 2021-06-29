@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:gmaps/DirectionServices.dart';
 import 'package:gmaps/Directions.dart';
@@ -39,11 +41,29 @@ class _MapViewState extends State<MapView> {
   Marker _destination;
   Directions _info;
 
+  List<LatLng> polygonItems = [
+    LatLng(22.3569, 91.7832),
+    LatLng(22.3670, 91.7932),
+    LatLng(22.3769, 91.8832),
+    LatLng(22.3544, 91.3211)
+  ];
+
+  Set<Polygon> _polygons = HashSet<Polygon>();
+
   @override
   void dispose() {
     // TODO: implement dispose
     _mapController.dispose();
     super.dispose();
+  }
+
+  void _setPolygons() {
+    _polygons.add(Polygon(
+        polygonId: PolygonId("polygonId-1"),
+        points: polygonItems,
+        strokeColor: Colors.blue,
+        strokeWidth: 2,
+        fillColor: Colors.grey.withOpacity(0.2)));
   }
 
   void _addMarker(LatLng pos) async {
@@ -78,6 +98,7 @@ class _MapViewState extends State<MapView> {
 
   @override
   Widget build(BuildContext context) {
+    _setPolygons();
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -131,6 +152,7 @@ class _MapViewState extends State<MapView> {
                         .map((e) => LatLng(e.latitude, e.longitude))
                         .toList()),
             },
+            polygons: _polygons,
             onLongPress: _addMarker,
           ),
           if (_info != null)
